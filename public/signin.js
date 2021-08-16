@@ -1,6 +1,7 @@
-async function SignIn(anchor) {
+async function SignIn(anchor = 'root') {
   $(anchor).empty().append(`
 <form id="sign-in-form">
+  <h1>Log in as ${CLIENT_TYPE}</h1>
   <input
     id="email"
     name="email"

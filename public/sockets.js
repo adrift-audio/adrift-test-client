@@ -4,10 +4,10 @@ async function Sockets(anchor) {
   const connection = io.connect(
     WEBSOCKETS_ENDPOINT,
     {
-      autoConnect: false,
-      query: {
+      auth: {
         token: getToken(),
       },
+      autoConnect: false,
       reconnection: true,
       reconnectionAttempts: 10,
       reconnectionDelay: 1000,
@@ -22,7 +22,38 @@ async function Sockets(anchor) {
     'connect',
     () => {
       console.log('Connected to WS');
-      $(anchor).empty().append('Websockets connected!');
+
+      $(anchor).empty().append(`
+<div>Websockets connected!</div>
+<button
+  id="play-next"
+  type="button"
+>
+  Play next
+</button>
+      `);
+
+      $('#play-next').on('click', () => {
+        console.log('play next out');
+        connection.emit(EVENTS.PLAY_NEXT);
+      });    
     },
   );
+
+  connection.on(EVENTS.CONNECT_ERROR, (error) => {
+    console.log('Error connecting to the sockets:', error);
+    return connection.close();
+  });
+
+  connection.on(EVENTS.SWITCH_TRACK, (data) => {
+    const decodedMagnet = decodeMagnet(data.link);
+
+    return downloadTorrent(decodedMagnet);
+  });
+
+  $('#logout').on('click', async () => {
+    localStorage.removeItem('token');
+    await connection.disconnect(true);
+    return Index();
+  });
 }

@@ -23,7 +23,16 @@ async function Home(anchor) {
   const socketsAnchor = 'websockets-anchor';
   $(anchor).empty().append(`
 <h1>Hello ${user.firstName} ${user.lastName}!</h1>
+<mark>Logged in as ${CLIENT_TYPE}</mark>
 <div id="${socketsAnchor}"></div>
+<div>
+  <button
+    id="logout"
+    type="button"
+  >
+    Logout
+  </button>
+</div>
   `);
 
   await Sockets(`#${socketsAnchor}`);
