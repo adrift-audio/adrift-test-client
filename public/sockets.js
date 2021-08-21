@@ -19,24 +19,23 @@ async function Sockets(anchor) {
   await connection.connect();
 
   connection.on(
-    'connect',
+    EVENTS.CONNECT,
     () => {
-      console.log('Connected to WS');
+      console.log('-- connected to WS server with id', connection.id);
 
       $(anchor).empty().append(`
 <div>Websockets connected!</div>
-<button
-  id="play-next"
-  type="button"
->
-  Play next
-</button>
+<div id="now-playing"></div>
+<div id="track-list"></div>
       `);
 
-      $('#play-next').on('click', () => {
-        console.log('play next out');
-        connection.emit(EVENTS.PLAY_NEXT);
-      });    
+      connection.emit(
+        EVENTS.CLIENT_CONNECTED,
+        {
+          issuer: CLIENT_TYPE,
+          client: CLIENT_TYPE,
+        },
+      );
     },
   );
 
@@ -45,8 +44,39 @@ async function Sockets(anchor) {
     return connection.close();
   });
 
+  // Receive available playlist when desktop connects and display it
+  connection.on(
+    EVENTS.AVAILABLE_PLAYLIST,
+    ({ playlist }) => {
+      playlist.forEach((track) => $('#track-list').append(`
+<button
+    class="track-item"
+    id="${track.id}"
+    style="background-color: transparent; width: 100%; text-align: left; margin-top: 5px;"
+    type="button"
+>
+    ${track.name} (${track.duration})
+</button>
+      `)); 
+
+      $('.track-item').on('click', (event) => connection.emit(
+        EVENTS.PLAY_NEXT,
+        {
+          id: event.target.id,
+          issuer: CLIENT_TYPE,
+          target: 'desktop',
+        },
+      ));
+    },
+  );
+
   connection.on(EVENTS.SWITCH_TRACK, (data) => {
     const decodedMagnet = decodeMagnet(data.link);
+    $('#now-playing').empty().append(`
+<div>
+  Now playing: ${data.track.name}
+</div>    
+    `);
 
     return downloadTorrent(decodedMagnet);
   });

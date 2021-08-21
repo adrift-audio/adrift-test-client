@@ -9,8 +9,16 @@ function downloadTorrent(magnet = '') {
 
   console.log('got magnet', magnet);
   TorrentClient.add(magnet, (torrent) => {
+    console.log(torrent);
     const [audio] = torrent.files;
 
-    audio.appendTo('body', { autoplay: true });
+    audio.appendTo(
+      'body',
+      {
+        autoplay: true,
+        muted: false,
+        controls: true,
+      },
+    );
   });
 }

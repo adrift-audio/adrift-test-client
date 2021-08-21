@@ -3,7 +3,8 @@ const CLIENT_TYPE = 'mobile';
 const WEBSOCKETS_ENDPOINT = 'http://localhost:5622';
 
 const EVENTS = {
-  CONNECT: 'connection',
+  AVAILABLE_PLAYLIST: 'AVAILABLE_PLAYLIST',
+  CONNECT: 'connect',
   CONNECT_ERROR: 'connect_error',
   DISCONNECT: 'disconnect',
   PLAY_NEXT: 'PLAY_NEXT',
