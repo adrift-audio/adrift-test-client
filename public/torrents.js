@@ -2,7 +2,7 @@ const TorrentClient = new WebTorrent();
 
 TorrentClient.on('error', console.error);
 
-function downloadTorrent(magnet = '') {
+function downloadTorrent(magnet = '', progressAnchor = 'progress') {
   if (!magnet) {
     return console.error('magnet link is empty!');
   }
@@ -11,6 +11,8 @@ function downloadTorrent(magnet = '') {
   TorrentClient.add(magnet, (torrent) => {
     console.log(torrent);
     const [audio] = torrent.files;
+
+    torrent.on('download', () => $(`#${progressAnchor}`).empty().append(torrent.progress));
 
     audio.appendTo(
       'body',

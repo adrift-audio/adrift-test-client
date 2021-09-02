@@ -74,11 +74,11 @@ async function Sockets(anchor) {
     const decodedMagnet = decodeMagnet(data.link);
     $('#now-playing').empty().append(`
 <div>
-  Now playing: ${data.track.name}
+  Now playing: ${data.track.name} (<span id="progress"></span>)
 </div>    
     `);
 
-    return downloadTorrent(decodedMagnet);
+    return downloadTorrent(decodedMagnet, 'progress');
   });
 
   $('#logout').on('click', async () => {
