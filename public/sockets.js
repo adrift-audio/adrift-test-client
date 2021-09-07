@@ -27,6 +27,7 @@ async function Sockets(anchor) {
 <div>Websockets connected!</div>
 <div id="now-playing"></div>
 <div id="track-list"></div>
+<div id="audio"></div>
       `);
 
       connection.emit(

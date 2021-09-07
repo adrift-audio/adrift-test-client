@@ -9,18 +9,34 @@ function downloadTorrent(magnet = '', progressAnchor = 'progress') {
 
   console.log('got magnet', magnet);
   TorrentClient.add(magnet, (torrent) => {
-    console.log(torrent);
-    const [audio] = torrent.files;
+    console.log('got torrent', torrent);
+
+    torrent.on('done', () => {
+      const [audio] = torrent.files;
+      console.log('track', audio);
+
+      audio.getBlobUrl((err, url) => {
+        if (err) {
+          throw err;
+        }
+  
+        $('#audio').empty().append(`
+  <audio autoplay controls>
+    <source src="${url}"
+  </audio>   
+        `);
+      });
+    });
 
     torrent.on('download', () => $(`#${progressAnchor}`).empty().append(torrent.progress));
 
-    audio.appendTo(
-      'body',
-      {
-        autoplay: true,
-        muted: false,
-        controls: true,
-      },
-    );
+    // audio.appendTo(
+    //   'body',
+    //   {
+    //     autoplay: true,
+    //     muted: false,
+    //     controls: true,
+    //   },
+    // );
   });
 }
