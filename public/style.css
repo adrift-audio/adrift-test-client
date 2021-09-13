@@ -1,0 +1,71 @@
+:root {
+  --accent1: #0C3756;
+  --accent2: #1F5372;
+  --accent3: #3A728E;
+  --accent4: #5C93AA;
+  --accent5: #86B6C6;
+  --accent6: #B7D9E2;
+  --accent7: #F0FCFE;
+  --app-background: white;
+  --app-text: #021624;
+  --error: #860C2C;
+  --muted-background: #e2e2e2;
+  --muted-text: #9a9a9a;
+  --spacer: 16px;
+  --spacer-half: 8px;
+  --spacer-quarter: 4px;
+  --success: #0C7640;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background-color: var(--accent1);
+  border: none;
+  color: var(--app-background);
+  padding: var(--spacer);
+  transition: background-color 160ms ease-in;
+}
+button:hover {
+  background-color: var(--accent4);
+  cursor: pointer;
+  transition: background-color 160ms ease-out;
+}
+
+.flex {
+  display: flex;
+}
+.direction-col {
+  flex-direction: column;
+}
+.justify-content-space-between {
+  justify-content: space-between;
+}
+.mb-1 {
+  margin-bottom: var(--spacer);
+}
+.mt-1 {
+  margin-top: var(--spacer);
+}
+.w-100 {
+  width: 100%;
+}
+
+.root-wrap {
+  padding: var(--spacer);
+}
+.track {
+  background-color: var(--app-background);
+  color: var(--accent1);
+  padding: var(--spacer-quarter) var(--spacer);
+  transition: background-color 160ms ease-in, color 160ms ease-in;
+}
+.track:hover {
+  background-color: var(--accent1);
+  color: var(--app-background);
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}

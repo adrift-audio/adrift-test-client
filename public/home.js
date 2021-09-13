@@ -27,6 +27,7 @@ async function Home(anchor) {
 <div id="${socketsAnchor}"></div>
 <div>
   <button
+    class="mt-1"
     id="logout"
     type="button"
   >

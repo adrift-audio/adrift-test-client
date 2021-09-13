@@ -51,12 +51,12 @@ async function Sockets(anchor) {
     ({ playlist }) => {
       playlist.forEach((track) => $('#track-list').append(`
 <button
-    class="track-item"
+    class="track-item flex justify-content-space-between w-100 track"
     id="${track.id}"
-    style="background-color: transparent; width: 100%; text-align: left; margin-top: 5px;"
     type="button"
 >
-    ${track.name} (${track.duration})
+    <span>${track.name}</span>
+    <span>${formatDuration(track.duration)}</span>
 </button>
       `)); 
 
@@ -79,7 +79,7 @@ async function Sockets(anchor) {
 </div>    
     `);
 
-    return downloadTorrent(decodedMagnet, 'progress');
+    return downloadTorrent(decodedMagnet, 'progress', data.track);
   });
 
   $('#logout').on('click', async () => {
