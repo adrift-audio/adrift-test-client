@@ -1,4 +1,4 @@
-async function Index() {
+function Index() {
   const anchor = '#root';
 
   const token = getToken();

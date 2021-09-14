@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="./style.css"
+      rel="stylesheet"
+    />
     <script src="./jq.js"></script>
     <script src="./socketio.js"></script>
     <script src="./wt.js"></script>
     <script src="./utilities.js"></script>
     <script src="./sockets.js"></script>
     <script src="./torrents.js"></script>
-    <script src="./home.js"></script>
-    <script src="./signin.js"></script>
+    <script src="./home/index.js"></script>
+    <script src="./sign-in/index.js"></script>
     <script src="./index.js"></script>
     <title>
-      Adrift test client
+      Adrift Test Client
     </title>
   </head>
   <body>
-    <div
-      class="root-wrap"
+    <main
+      class="flex direction-col h-100 w-100 root-wrap"
       id="root"
-    ></div>
+    ></main>
+    <footer class="text-center">
+      Adrift by Peter Dyumin, 2021
+    </footer>
   </body>
 </html>
