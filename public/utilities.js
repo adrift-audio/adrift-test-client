@@ -10,7 +10,9 @@ const EVENTS = {
   CONNECT: 'connect',
   CONNECT_ERROR: 'connect_error',
   DISCONNECT: 'disconnect',
+  ERROR: 'ERROR',
   PLAY_NEXT: 'PLAY_NEXT',
+  REMOVE_ALL: 'REMOVE_ALL',
   REMOVE_FILE: 'REMOVE_FILE',
   SWITCH_TRACK: 'SWITCH_TRACK',
 };
@@ -42,5 +44,14 @@ const formatDuration = (duration = 0) => {
 };
 
 const getToken = () => localStorage.getItem('token');
+
+const randomize = (array = []) => {
+  const mutable = [...array];
+  for (let i = mutable.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [mutable[i], mutable[j]] = [mutable[j], mutable[i]];
+  }
+  return mutable;
+}
 
 const setToken = (token = '') => localStorage.setItem('token', token);
