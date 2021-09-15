@@ -11,6 +11,8 @@
     <script src="./components/loader.js"></script>
     <script src="./utilities.js"></script>
     <script src="./sockets.js"></script>
+    <script src="./player/index.js"></script>
+    <script src="./playlist/index.js"></script>
     <script src="./torrents.js"></script>
     <script src="./home/index.js"></script>
     <script src="./sign-in/index.js"></script>
@@ -20,11 +22,15 @@
     </title>
   </head>
   <body>
+    <header
+      class="noselect"
+      id="loader"
+    ></header>
     <main
       class="flex direction-col h-100 w-100 root-wrap"
       id="root"
     ></main>
-    <footer class="text-center">
+    <footer class="text-center noselect">
       Adrift by Peter Dyumin, 2021
     </footer>
   </body>

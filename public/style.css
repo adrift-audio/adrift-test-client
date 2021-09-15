@@ -58,6 +58,14 @@ input:hover {
   transition: border-bottom 160ms ease-in;
 }
 
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .flex {
   display: flex;
 }
@@ -78,6 +86,9 @@ input:hover {
 }
 .mb-1 {
   margin-bottom: var(--spacer);
+}
+.mr-1 {
+  margin-right: var(--spacer);
 }
 .mt-1 {
   margin-top: var(--spacer);
@@ -106,6 +117,21 @@ input:hover {
   padding: var(--spacer);
   width: 100%;
 }
+.home-tab-button {
+  background-color: var(--app-background);
+  border-bottom: 2px solid var(--app-background);
+  color: var(--accent2);
+  transition: border-bottom 160ms ease-out;
+  width: 50%;
+}
+.home-tab-button:hover {
+  background-color: var(--app-background);
+  border-bottom: 2px solid var(--accent2);
+  transition: border-bottom 160ms ease-in;
+}
+.tab-selected {
+  border-bottom: 2px solid var(--accent2);
+}
 .track {
   background-color: var(--app-background);
   color: var(--accent1);
@@ -119,6 +145,21 @@ input:hover {
 }
 
 /* Loader */
+@keyframes loaderbg {
+  0% {
+    backdrop-filter: none;
+  }
+  100% {
+    backdrop-filter: brightness(250%) grayscale(100%) blur(var(--spacer-half));
+  }
+}
+.loader-wrap {
+  animation: loaderbg 160ms linear;
+  backdrop-filter: brightness(250%) grayscale(100%) blur(var(--spacer-half));
+  height: 100vh;
+  position: absolute;
+  width: 100%;
+}
 .loader, .loader:after {
   border-radius: 50%;
   width: 10em;

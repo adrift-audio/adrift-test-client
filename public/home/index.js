@@ -1,5 +1,12 @@
-async function Home(anchor) {
-  loader(anchor);
+let TAB = 'playlist';
+let USER = {};
+
+function HomePlayer() {
+
+}
+
+async function Home(anchor = '#root') {
+  loader();
 
   const token = getToken();
   if (!token) {
@@ -15,25 +22,76 @@ async function Home(anchor) {
       url: `${BACKEND_ENDPOINT}/api/account`,
     });
 
-    const { user } = data;
-    const socketsAnchor = 'websockets-anchor';
+    USER = data.user;
+
+    loader.hide();
+
+    if (!connection.connected) {
+      await Sockets(token);
+    }
+
     $(anchor).empty().append(`
-  <h1>Hello ${user.firstName} ${user.lastName}!</h1>
-  <mark>Logged in as ${CLIENT_TYPE}</mark>
-  <div id="${socketsAnchor}"></div>
-  <div>
+  <div class="flex justify-content-space-between items-center noselect">
+    <div>${USER.firstName} ${USER.lastName} (${USER.email})</div>
+    <div class="flex items-center">
+      <span class="mr-1">
+        Client: ${CLIENT_TYPE}
+      </span>
+      <button
+        id="logout"
+        type="button"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+  <div
+    class="flex w-100"
+    id="tabs"
+  >
     <button
-      class="mt-1"
-      id="logout"
+      class="home-tab-button ${TAB === 'player' ? 'tab-selected' : ''}"
+      id="select-player"
       type="button"
     >
-      Logout
+      Player
+    </button>
+    <button
+      class="home-tab-button ${TAB === 'playlist' ? 'tab-selected' : ''}"
+      id="select-playlist"
+      type="button"
+    >
+      Playlist
     </button>
   </div>
+  <div
+    class="mt-1"
+    id="home-player"
+  ></div>
     `);
   
-    await Sockets(`#${socketsAnchor}`);
-  } catch (error) {
+    $('#select-player').on('click', () => {
+      if (TAB === 'player') {
+        return null;
+      }
 
+      return Player();
+    });
+    $('#select-playlist').on('click', () => {
+      if (TAB === 'playlist') {
+        return null;
+      }
+
+      return Playlist();
+    });
+
+    $('#logout').on('click', async () => {
+      removeToken();
+      // await connection.disconnect(true);
+      return Index();
+    });
+  } catch (error) {
+    loader.hide();
+    console.log(error);
   }
 }

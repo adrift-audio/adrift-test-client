@@ -54,4 +54,6 @@ const randomize = (array = []) => {
   return mutable;
 }
 
+const removeToken = () => localStorage.removeItem('token');
+
 const setToken = (token = '') => localStorage.setItem('token', token);

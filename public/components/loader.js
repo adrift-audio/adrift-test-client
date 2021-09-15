@@ -1,7 +1,9 @@
-function loader(anchor) {
-  return $(anchor).empty().append(`
-<div class="flex items-center justify-items-center h-100">
+const loader = () => {
+  return $('#loader').empty().append(`
+<div class="flex items-center justify-items-center loader-wrap">
   <div class="loader"></div>
 </div>  
   `);
 }
+
+loader.hide = () => $('#loader').empty();
