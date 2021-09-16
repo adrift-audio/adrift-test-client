@@ -41,13 +41,7 @@ async function Sockets(token) {
 
   connection.on(EVENTS.SWITCH_TRACK, (data) => {
     const decodedMagnet = decodeMagnet(data.link);
-    $('#now-playing').empty().append(`
-<div>
-  Now playing: ${data.track.name} (<span id="progress"></span>)
-</div>    
-    `);
-
-    return downloadTorrent(decodedMagnet, 'progress', data.track);
+    return downloadTorrent(decodedMagnet, data.track);
   });
 
   connection.on(

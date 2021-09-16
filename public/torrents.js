@@ -4,24 +4,20 @@ TorrentClient.on('error', console.error);
 
 const LINKS = [];
 
-// total space used for file storing
-let TOTAL_SPACE = 0;
+const AUDIO = new Audio();
 
-function downloadTorrent(magnet = '', progressAnchor = 'progress', track) {
+function downloadTorrent(magnet = '', track) {
   if (!magnet) {
     return console.error('magnet link is empty!');
   }
 
   const [existing] = LINKS.filter(({ id }) => id === track.id);
-  console.log(existing);
   if (existing) {
-    console.log('total space used', TOTAL_SPACE / 1024 / 1024);
-    $(`#${progressAnchor}`).empty().append('100%');
-    return $('#audio').empty().append(`
-<audio autoplay controls>
-  <source src="${existing.link}"
-</audio>   
-    `);
+    $('#download-progress').empty().append('100%');
+    IS_PLAYING = true;
+    AUDIO.src = existing.link;
+    AUDIO.play();
+    Player();
   }
 
   console.log('got magnet', magnet);
@@ -29,7 +25,6 @@ function downloadTorrent(magnet = '', progressAnchor = 'progress', track) {
     console.log('got torrent', torrent);
 
     torrent.on('done', () => {
-      TOTAL_SPACE += torrent.files[0].length;
       torrent.files[0].getBlob((err, blob) => {
         if (err) {
           throw err;
@@ -40,20 +35,18 @@ function downloadTorrent(magnet = '', progressAnchor = 'progress', track) {
           id: track.id,
           link,
         });
-  
-        $('#audio').empty().append(`
-  <audio autoplay controls>
-    <source src="${link}"
-  </audio>   
-        `);
 
-        console.log('total space used', TOTAL_SPACE / 1024 / 1024);
+        $('#download-progress').empty().append('100%')
+        IS_PLAYING = true;
+        AUDIO.src = link;
+        AUDIO.play();
+        Player();
       });
     });
 
     torrent.on(
       'download',
-      () => $(`#${progressAnchor}`).empty().append(`${Math.floor(torrent.progress * 100)}%`),
+      () => $('#download-progress').empty().append(`${Math.floor(torrent.progress * 100)}%`),
     );
   });
 }

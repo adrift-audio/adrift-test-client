@@ -1,14 +1,15 @@
 let LOADED_PLAYLIST = [];
 
 function drawContent(anchor) {
+  $(anchor).empty();
   LOADED_PLAYLIST.forEach((track) => $(anchor).append(`
 <button
-  class="flex justify-content-space-between w-100 track"
+  class="flex justify-content-space-between w-100 track noselect"
   id="${track.id}"
   type="button"
 >
   <span id="${track.id}">${track.name}</span>
-  <span id="${track.id}">${formatDuration(track.duration)}s</span>
+  <span id="${track.id}">${formatDuration(track.duration)}</span>
 </button>
   `));
 
@@ -23,14 +24,11 @@ function drawContent(anchor) {
       },
     );
     SELECTED_TRACK = LOADED_PLAYLIST.filter((track) => track.id === id)[0];
-    console.log(SELECTED_TRACK);
     return Player();
   }); 
 }
 
 function Playlist(anchor = '#home-player') {
-  $(anchor).empty();
-
   $('#select-player').removeClass('tab-selected');
   $('#select-playlist').addClass('tab-selected');
   TAB = 'playlist';

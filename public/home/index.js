@@ -46,7 +46,7 @@ async function Home(anchor = '#root') {
     </div>
   </div>
   <div
-    class="flex w-100"
+    class="flex w-100 noselect"
     id="tabs"
   >
     <button
